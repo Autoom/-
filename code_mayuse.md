@@ -86,3 +86,18 @@ we can use them in
 
     model.compile(optimizer=optimizer, loss=[focal_loss(alpha=.25, gamma=2)])
 
+# tensorflow 数据增强
+> 通常用得到的数据增强函数
+
+	def parse_data(filename, scores):
+	    image = tf.read_file(filename)
+	    image = tf.image.decode_jpeg(image, channels=3)
+	    image = tf.image.resize_images(image, (IMAGE_SIZE, IMAGE_SIZE))
+	    image = tf.image.random_flip_left_right(image) #左右翻转
+	    image = tf.contrib.image.rotate(image, random.randint(-30,30) * math.pi/180,interpolation='BILINEAR')# 图像旋转（按照中心点旋转(-30,30)度）
+	    image = tf.image.random_hue(image, max_delta=0.05) # 色度
+	    image = tf.image.random_contrast(image, lower=0.3, upper=1.0) # 对比度
+	    image = tf.image.random_brightness(image, max_delta=0.2) # 亮度
+	    image = tf.image.random_saturation(image, lower=0.5, upper=2.0) #饱和度
+	    image = (tf.cast(image, tf.float32) - 127.5) / 127.5
+	    return image, scores
