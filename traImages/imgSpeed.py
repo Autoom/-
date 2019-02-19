@@ -13,6 +13,8 @@ from skimage import io
 from keras.preprocessing import image
 
 N = 50
+"""比较不同的读取图片的方式，比较读取图片的速度  
+ 得出mxnet读取图片的速度最快的结论"""
 
 
 def mxReader(imgPath):
